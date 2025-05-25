@@ -124,6 +124,20 @@ header h1 {
     color: #555;
 }
 
+/* Search Section */
+#search-section {
+    margin-bottom: 20px;
+}
+
+#search-input {
+    width: 80%;
+    max-width: 300px; /* Or a fixed width if preferred, ensuring it doesn't get too large */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
     header h1 {

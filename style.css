@@ -91,6 +91,16 @@ header h1 {
     transform: rotateY(180deg);
 }
 
+#word-image {
+    max-width: 80%; /* Of the card width */
+    max-height: 100px; /* Adjust as needed, this is a starting point */
+    margin-top: 10px; /* Space between word text and image */
+    display: block; /* To enable auto margins for centering and ensure proper stacking */
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px; /* Optional: slightly rounded corners for the image */
+}
+
 /* Navigation Controls */
 #navigation-controls {
     margin-bottom: 20px;

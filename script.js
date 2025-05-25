@@ -9,6 +9,7 @@ const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 const progressContainer = document.getElementById('progress-container');
 const searchInput = document.getElementById('search-input');
+const wordImage = document.getElementById('word-image');
 
 // Fetch Words
 async function loadWords() {
@@ -25,12 +26,14 @@ async function loadWords() {
             progressContainer.textContent = 'No words loaded.';
             flashcardFront.textContent = 'N/A';
             flashcardBack.textContent = 'N/A';
+            if (wordImage) wordImage.style.display = 'none';
         }
     } catch (error) {
         console.error('Error loading words:', error);
         progressContainer.textContent = 'Error loading words.';
         flashcardFront.textContent = 'Error';
         flashcardBack.textContent = 'Error';
+        if (wordImage) wordImage.style.display = 'none';
     }
 }
 
@@ -50,6 +53,16 @@ function displayWord() {
     const wordData = words[currentWordIndex];
     flashcardFront.textContent = wordData.english;
     flashcardBack.textContent = wordData.sinhala;
+
+    const imagePath = wordData.image_path;
+    if (imagePath && imagePath.trim() !== "") {
+        wordImage.src = imagePath;
+        wordImage.style.display = 'block';
+    } else {
+        wordImage.src = '';
+        wordImage.style.display = 'none';
+    }
+
     flashcard.classList.remove('flipped');
 }
 
@@ -129,6 +142,7 @@ function handleSearch() {
         flashcardFront.textContent = 'Word not found';
         flashcardBack.textContent = '---';
         progressContainer.textContent = 'No match found';
+        if (wordImage) wordImage.style.display = 'none'; // Hide image on no match
         flashcard.classList.remove('flipped'); // Ensure front is showing
     }
 }

@@ -27,7 +27,7 @@ main {
 header {
     background-color: #333;
     color: #fff;
-    padding: 0.5rem 0; /* Adjusted padding */
+    padding: 1rem 0; /* Reverted padding */
     text-align: center;
     width: 100%;
     margin-bottom: 20px;
@@ -36,14 +36,6 @@ header {
 header h1 {
     margin: 0;
     font-size: 1.8rem;
-}
-
-#header-banner {
-    max-width: 100%; /* Make it responsive */
-    height: auto;   /* Maintain aspect ratio */
-    max-height: 150px; /* Optional: constrain max height */
-    display: block;
-    margin: 0 auto 0.5rem auto; /* Center it and add some margin below if h1 is visible */
 }
 
 /* Flashcard */

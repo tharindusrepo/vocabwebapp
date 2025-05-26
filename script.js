@@ -28,6 +28,7 @@ const nextQuizQuestionButton = document.getElementById('next-quiz-question');
 const quizResultsDisplay = document.getElementById('quiz-results');
 const restartQuizButton = document.getElementById('restart-quiz-button');
 const exitQuizButton = document.getElementById('exit-quiz-button');
+const homeButton = document.getElementById('home-button');
 
 // References to main sections to hide/show
 const flashcardSection = document.getElementById('flashcard-section');
@@ -395,3 +396,35 @@ function exitQuiz() {
 restartQuizButton.addEventListener('click', startQuiz);
 exitQuizButton.addEventListener('click', exitQuiz);
 startQuizButton.addEventListener('click', startQuiz);
+
+// Home Button Functionality
+function goHome() {
+    if (quizActive) {
+        exitQuiz(); // This already resets to main view and first word
+    } else {
+        // If not in quiz, ensure quiz section is hidden and main sections are visible
+        quizSection.style.display = 'none';
+        if (flashcardSection) flashcardSection.style.display = 'block'; // Or appropriate
+        if (navigationControls) navigationControls.style.display = 'block'; // Or appropriate
+        if (progressDisplay) progressDisplay.style.display = 'block';
+        if (searchSection) searchSection.style.display = 'block'; // Or appropriate
+        if (startQuizButton) startQuizButton.style.display = 'inline-block';
+
+        // Reset main view to the first word
+        currentWordIndex = 0;
+        if (words.length > 0) {
+            displayWord();
+            updateProgress();
+        } else {
+            flashcardFront.textContent = 'N/A';
+            flashcardBack.textContent = 'N/A';
+            if (wordImage) wordImage.style.display = 'none';
+            progressContainer.textContent = 'No words loaded.';
+        }
+        // Ensure flashcard is not flipped and search input is clear
+        flashcard.classList.remove('flipped');
+        if (searchInput) searchInput.value = ''; 
+    }
+}
+
+if (homeButton) homeButton.addEventListener('click', goHome);

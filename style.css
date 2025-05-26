@@ -27,16 +27,50 @@ main {
 header {
     background-color: #333;
     color: #fff;
-    padding: 1rem 0; /* Reverted padding */
-    text-align: center;
+    padding: 0.5rem 1rem; /* Adjusted padding slightly for better balance with flex items */
     width: 100%;
     margin-bottom: 20px;
+    display: flex; /* Apply flexbox */
+    align-items: center; /* Vertically align items in the center */
+    justify-content: space-between; /* Space out title/credit block and home button */
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
 }
 
-header h1 {
+#header-content {
+    text-align: left; /* Or center if you prefer the text block itself to be centered */
+    flex-grow: 1; /* Allow this to take up available space if needed */
+}
+
+header h1 { /* Existing style, just for context */
     margin: 0;
     font-size: 1.8rem;
+    /* No change needed unless it causes issues with author credit spacing */
 }
+
+#author-credit {
+    font-size: 0.75rem; /* Make it small */
+    color: #ccc;      /* Lighter color, but visible on dark header */
+    margin-top: 2px;   /* Small space below H1 */
+    margin-bottom: 0;  /* No extra margin below it if header padding handles it */
+    font-weight: normal;
+}
+
+.header-nav-button { /* General class for buttons in header */
+    background-color: #007bff; /* Blue, similar to Start Quiz or a distinct primary color */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none; /* If it were an <a> tag */
+    transition: background-color 0.3s;
+    margin-left: 10px; /* Space from the title block if on the same line */
+}
+.header-nav-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+/* If #home-button needs specific overrides, they can be added, but class should be enough. */
 
 /* Flashcard */
 #flashcard-section {
@@ -313,5 +347,22 @@ footer {
 
     #progress-container {
         font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) { /* Example breakpoint */
+    header {
+        flex-direction: column; /* Stack title block and home button */
+        align-items: center; /* Center items when stacked */
+        padding: 0.75rem 1rem; /* Adjust padding if needed */
+    }
+    #header-content {
+        text-align: center; /* Center title and author when stacked */
+        margin-bottom: 10px; /* Space between title block and home button when stacked */
+    }
+    .header-nav-button {
+        margin-left: 0; /* Remove left margin when stacked */
+        /* width: 100%; /* Optional: make button full width */
+        /* box-sizing: border-box; /* If using width 100% and padding */
     }
 }

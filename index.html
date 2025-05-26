@@ -31,12 +31,32 @@
             <button id="prev-button">Previous</button>
             <button id="next-button">Next</button>
         </section>
+        <button id="start-quiz-button" class="quiz-button">Start Quiz</button>
         <section id="progress-display">
             <div id="progress-container">
                 <!-- Progress text will appear here (e.g., "Word X of Y") -->
             </div>
         </section>
     </main>
+    <section id="quiz-section" style="display: none;">
+        <h2>Quiz Mode</h2>
+        <div id="quiz-progress">Question X of Y | Score: Z</div>
+        <div id="quiz-question-word" class="flashcard-container" style="min-height: 150px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px;">
+            <!-- Question word will appear here -->
+        </div>
+        <div id="quiz-options-container">
+            <!-- Answer option buttons will be dynamically added here -->
+        </div>
+        <div id="quiz-feedback" style="min-height: 30px; margin-top: 15px; font-weight: bold;">
+            <!-- Feedback like "Correct!" or "Incorrect!" -->
+        </div>
+        <button id="next-quiz-question" class="quiz-button" style="display: none; margin-top: 15px;">Next Question</button>
+        <div id="quiz-results" style="display: none; margin-top: 20px; font-size: 1.2rem;">
+            <!-- Final score and summary will appear here -->
+        </div>
+        <button id="restart-quiz-button" class="quiz-button" style="display: none; margin-top: 15px;">Restart Quiz</button>
+        <button id="exit-quiz-button" class="quiz-button" style="display: none; margin-top: 10px; margin-left:10px;">Exit Quiz</button>
+    </section>
     <footer>
         <p>© Tharindu K. Jayasinghe | Beta Version | 2025</p>
     </footer>

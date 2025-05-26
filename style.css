@@ -225,6 +225,29 @@ header h1 { /* Existing style, just for context */
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+/* Main Action Button (e.g., for Sentence Practice) */
+.main-action-button {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 10px 5px 0 5px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.main-action-button:hover {
+    background-color: #0056b3; /* Darker blue */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+.main-action-button:active {
+    background-color: #004085; /* Even darker blue */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 /* Quiz Section */
 #quiz-section {
     text-align: center;
@@ -304,6 +327,94 @@ header h1 { /* Existing style, just for context */
     border-radius: 5px;
 }
 
+/* Sentence Structure Section */
+#sentence-structure-section {
+    text-align: left; /* Default text alignment for content inside */
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #cce5ff; /* Light blue border */
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Light grey background */
+}
+#sentence-structure-section h2 {
+    text-align: center; /* Center the main title of the section */
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    color: #0056b3; /* Darker blue for title */
+}
+.lang-section {
+    background-color: #fff; /* White background for each language part */
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 10px; /* Space before the constructed sentence paragraph */
+    display: flex;
+    flex-direction: row; /* Arrange component groups horizontally */
+    justify-content: flex-start; /* Changed */
+    align-items: flex-start; /* Align groups to their top */
+    flex-wrap: wrap; /* Allow groups to wrap on smaller screens */
+}
+/* .lang-section:last-of-type was removed as margin-bottom is now on .lang-section itself */
+.component-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;   /* Adjusted as per instruction example */
+    flex-grow: 1;         /* Ensured present */
+    flex-shrink: 1;       /* Added */
+    flex-basis: auto;    /* Changed from calc */
+    min-width: 100px;     /* Reduced significantly */
+}
+.component-group:last-child {
+    margin-right: 0; /* This should remain */
+}
+.lang-section h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+#sentence-structure-section select {
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%; /* Make select take full width of its .component-group parent */
+    box-sizing: border-box; /* Crucial for width 100% with padding */
+    /* margin-right and margin-bottom are now handled by .component-group */
+}
+#sentence-structure-section .lang-section label { /* Specific to labels in lang-section */
+    display: block; 
+    font-weight: bold;  
+    font-size: 0.9rem;  
+    margin-bottom: 5px; /* Space between label and its select */
+    text-align: left;   
+    /* margin-right: 0; /* Ensured by .component-group layout */
+}
+.sentence-display {
+    padding: 10px;
+    background-color: #e9ecef; /* Light grey for sentence background */
+    border-radius: 4px;
+    min-height: 2em; /* Ensure it has some height even if empty */
+    font-family: 'Courier New', Courier, monospace; /* Monospace for sentence structure feel */
+    font-size: 1.1rem;
+    clear: both; /* If flexbox on .lang-section wasn't enough or if wrapping occurs oddly */
+    width: 100%; /* Ensure it takes full width below the groups */
+    /* Inline styles for margin-top and font-weight are okay for now */
+}
+#sentence-feedback.correct {
+    color: green;
+}
+#sentence-feedback.incorrect {
+    color: red;
+}
+#sentence-structure-section hr {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    /* margin already set inline, which is fine */
+}
+/* Buttons #check-sentence-button, #exit-sentence-button use .quiz-button class */
+
 
 /* Footer */
 footer {
@@ -365,4 +476,19 @@ footer {
         /* width: 100%; /* Optional: make button full width */
         /* box-sizing: border-box; /* If using width 100% and padding */
     }
+}
+
+@media (max-width: 768px) { /* Or a suitable breakpoint */
+    .lang-section {
+        flex-direction: column; /* Stack component groups vertically */
+        align-items: stretch; /* Make groups take full width */
+    }
+    .component-group {
+        width: 100%; /* Each S-V-O group takes full width */
+        margin-right: 0;
+        margin-bottom: 10px; /* Space between stacked groups */
+        flex-basis: auto; /* Reset flex-basis for stacked layout */
+    }
+    /* #sentence-structure-section select styles (width: 100%, box-sizing) from above apply well here */
+    /* #sentence-structure-section label styles (margin-bottom: 5px) from above apply well here */
 }

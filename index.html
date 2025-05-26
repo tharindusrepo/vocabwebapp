@@ -41,6 +41,7 @@
             <button id="next-button">Next</button>
         </section>
         <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
+        <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
     </main>
     <section id="quiz-section" style="display: none;">
         <h2>Quiz Mode</h2>
@@ -60,6 +61,47 @@
         </div>
         <button id="restart-quiz-button" class="quiz-button" style="display: none; margin-top: 15px;">Restart Quiz</button>
         <button id="exit-quiz-button" class="quiz-button" style="display: none; margin-top: 10px; margin-left:10px;">Exit Quiz</button>
+    </section>
+    <section id="sentence-structure-section" style="display: none;">
+        <h2>Sentence Structure Practice (Simple Present)</h2>
+        <div class="lang-section" id="english-sentence-builder">
+            <h3>English</h3>
+            <div class="component-group">
+                <label for="subject-en">Subject:</label>
+                <select id="subject-en"></select>
+            </div>
+            <div class="component-group">
+                <label for="verb-en">Verb:</label>
+                <select id="verb-en"></select>
+            </div>
+            <div class="component-group">
+                <label for="object-en">Object:</label>
+                <select id="object-en"></select>
+            </div>
+            <p id="constructed-sentence-en" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
+        </div>
+        <hr style="margin: 20px 0;">
+        <div class="lang-section" id="sinhala-sentence-builder">
+            <h3>Sinhala</h3>
+            <div class="component-group">
+                <label for="subject-si">Subject (කර්තෘ):</label>
+                <select id="subject-si"></select>
+            </div>
+            <div class="component-group">
+                <label for="verb-si">Verb (ක්‍රියා පදය):</label>
+                <select id="verb-si"></select>
+            </div>
+            <div class="component-group">
+                <label for="object-si">Object (කර්මය):</label>
+                <select id="object-si"></select>
+            </div>
+            <p id="constructed-sentence-si" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
+        </div>
+        <div style="margin-top: 25px; text-align:center;">
+            <button id="check-sentence-button" class="quiz-button">Check Sentence</button>
+            <div id="sentence-feedback" style="min-height: 25px; margin-top: 10px; font-weight: bold;"></div>
+            <button id="exit-sentence-button" class="quiz-button" style="margin-top:15px;">Exit Practice</button>
+        </div>
     </section>
     <footer>
         <p>© Tharindu K. Jayasinghe | Beta Version | 2025</p>

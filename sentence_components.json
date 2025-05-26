@@ -1,0 +1,49 @@
+{
+  "subjects": [
+    { "id": "s01", "english": "I", "sinhala": "මම" },
+    { "id": "s02", "english": "we", "sinhala": "අපි" },
+    { "id": "s03", "english": "you", "sinhala": "ඔයා/ඔයාලා" },
+    { "id": "s04", "english": "they", "sinhala": "ඔවුන්" },
+    { "id": "s05", "english": "He", "sinhala": "ඔහු" },
+    { "id": "s06", "english": "She", "sinhala": "ඇය" },
+    { "id": "s07", "english": "it", "sinhala": "ඒක/ඌ" },
+    { "id": "s08", "english": "The Cat", "sinhala": "බළලා" },
+    { "id": "s09", "english": "Amila", "sinhala": "අමිල" }
+  ],
+  "verbs": [
+    { "id": "v01_base", "english": "eat", "sinhala": "කනවා" },
+    { "id": "v01_3ps", "english": "eats", "sinhala": "කනවා" },
+    { "id": "v02_base", "english": "drink", "sinhala": "බොනවා" },
+    { "id": "v02_3ps", "english": "drinks", "sinhala": "බොනවා" },
+    { "id": "v03_base", "english": "go", "sinhala": "යනවා" },
+    { "id": "v03_3ps", "english": "goes", "sinhala": "යනවා" },
+    { "id": "v04_base", "english": "come", "sinhala": "එනවා" },
+    { "id": "v04_3ps", "english": "comes", "sinhala": "එනවා" },
+    { "id": "v05_base", "english": "see", "sinhala": "දකිනවා" },
+    { "id": "v05_3ps", "english": "sees", "sinhala": "දකිනවා" },
+    { "id": "v06_base", "english": "do", "sinhala": "කරනවා" },
+    { "id": "v06_3ps", "english": "does", "sinhala": "කරනවා" },
+    { "id": "v07_base", "english": "say", "sinhala": "කියනවා" },
+    { "id": "v07_3ps", "english": "says", "sinhala": "කියනවා" },
+    { "id": "v08_base", "english": "give", "sinhala": "දෙනවා" },
+    { "id": "v08_3ps", "english": "gives", "sinhala": "දෙනවා" },
+    { "id": "v09_base", "english": "take", "sinhala": "ගන්නවා" },
+    { "id": "v09_3ps", "english": "takes", "sinhala": "ගන්නවා" },
+    { "id": "v10_base", "english": "read", "sinhala": "කියවනවා" },
+    { "id": "v10_3ps", "english": "reads", "sinhala": "කියවනවා" }
+  ],
+  "objects": [
+    { "id": "o01", "english": "water", "sinhala": "වතුර" },
+    { "id": "o02", "english": "food", "sinhala": "කෑම" },
+    { "id": "o03", "english": "book", "sinhala": "පොත" },
+    { "id": "o04", "english": "house", "sinhala": "ගෙදර" },
+    { "id": "o05", "english": "money", "sinhala": "සල්ලි" },
+    { "id": "o06", "english": "tree", "sinhala": "ගහ" },
+    { "id": "o07", "english": "flower", "sinhala": "මල" },
+    { "id": "o08", "english": "person", "sinhala": "පුද්ගලයා" },
+    { "id": "o09", "english": "car", "sinhala": "කාර් එක" },
+    { "id": "o10", "english": "table", "sinhala": "මේසෙ" },
+    { "id": "o11", "english": "rice", "sinhala": "බත්" },
+    { "id": "o12", "english": "a bird", "sinhala": "කුරුල්ලෙක්" }
+  ]
+}

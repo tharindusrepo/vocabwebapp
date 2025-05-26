@@ -8,6 +8,11 @@ let quizActive = false;
 const NUM_QUIZ_QUESTIONS = 10;
 const NUM_ANSWER_OPTIONS = 4; // e.g., 1 correct, 3 distractors
 
+let sentenceSubjects = [];
+let sentenceVerbs = [];
+let sentenceObjects = [];
+let sentencePracticeActive = false;
+
 const flashcardFront = document.querySelector('.flashcard-front');
 const flashcardBack = document.querySelector('.flashcard-back');
 const flashcard = document.querySelector('.flashcard');
@@ -29,6 +34,22 @@ const quizResultsDisplay = document.getElementById('quiz-results');
 const restartQuizButton = document.getElementById('restart-quiz-button');
 const exitQuizButton = document.getElementById('exit-quiz-button');
 const homeButton = document.getElementById('home-button');
+
+// Sentence Practice DOM References
+const startSentenceButton = document.getElementById('start-sentence-button');
+const sentenceStructureSection = document.getElementById('sentence-structure-section');
+const subjectEnSelect = document.getElementById('subject-en');
+const verbEnSelect = document.getElementById('verb-en');
+const objectEnSelect = document.getElementById('object-en');
+const constructedSentenceEn = document.getElementById('constructed-sentence-en');
+const subjectSiSelect = document.getElementById('subject-si');
+const verbSiSelect = document.getElementById('verb-si');
+const objectSiSelect = document.getElementById('object-si');
+const constructedSentenceSi = document.getElementById('constructed-sentence-si');
+const checkSentenceButton = document.getElementById('check-sentence-button');
+const sentenceFeedback = document.getElementById('sentence-feedback');
+const exitSentenceButton = document.getElementById('exit-sentence-button');
+
 
 // References to main sections to hide/show
 const flashcardSection = document.getElementById('flashcard-section');
@@ -401,14 +422,21 @@ startQuizButton.addEventListener('click', startQuiz);
 function goHome() {
     if (quizActive) {
         exitQuiz(); // This already resets to main view and first word
+    } else if (sentencePracticeActive) {
+        exitSentencePractice();
     } else {
-        // If not in quiz, ensure quiz section is hidden and main sections are visible
-        quizSection.style.display = 'none';
-        if (flashcardSection) flashcardSection.style.display = 'block'; // Or appropriate
-        if (navigationControls) navigationControls.style.display = 'block'; // Or appropriate
+        // If not in quiz or sentence mode, ensure all overlay sections are hidden
+        // and main sections are visible
+        if(quizSection) quizSection.style.display = 'none';
+        if(sentenceStructureSection) sentenceStructureSection.style.display = 'none';
+
+        if (flashcardSection) flashcardSection.style.display = 'block'; 
+        if (navigationControls) navigationControls.style.display = 'block'; 
         if (progressDisplay) progressDisplay.style.display = 'block';
-        if (searchSection) searchSection.style.display = 'block'; // Or appropriate
+        if (searchSection) searchSection.style.display = 'block'; 
         if (startQuizButton) startQuizButton.style.display = 'inline-block';
+        if (startSentenceButton) startSentenceButton.style.display = 'inline-block';
+
 
         // Reset main view to the first word
         currentWordIndex = 0;
@@ -428,3 +456,198 @@ function goHome() {
 }
 
 if (homeButton) homeButton.addEventListener('click', goHome);
+
+// Sentence Structure Practice Functions
+
+async function loadSentenceComponents() {
+    try {
+        const response = await fetch('sentence_components.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        sentenceSubjects = data.subjects || [];
+        sentenceVerbs = data.verbs || [];
+        sentenceObjects = data.objects || [];
+        
+        // Initial population after loading
+        populateDropdowns(); 
+        
+    } catch (error) {
+        console.error('Error loading sentence components:', error);
+        sentenceStructureSection.innerHTML = '<p style="color:red; text-align:center;">Error loading sentence practice components. Please try again later.</p>';
+    }
+}
+
+function populateDropdowns() {
+    // Helper to populate a single dropdown
+    const populateSelect = (selectElement, items, lang) => {
+        if (!selectElement) return; // Guard against null elements if HTML is missing
+        selectElement.innerHTML = '<option value="">--Select--</option>'; // Default empty option
+        items.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item[lang]; // 'english' or 'sinhala'
+            selectElement.appendChild(option);
+        });
+    };
+
+    populateSelect(subjectEnSelect, sentenceSubjects, 'english');
+    populateSelect(verbEnSelect, sentenceVerbs, 'english');
+    populateSelect(objectEnSelect, sentenceObjects, 'english');
+
+    populateSelect(subjectSiSelect, sentenceSubjects, 'sinhala');
+    populateSelect(verbSiSelect, sentenceVerbs, 'sinhala');
+    populateSelect(objectSiSelect, sentenceObjects, 'sinhala');
+    
+    // After populating, clear any initially constructed sentences
+    if(constructedSentenceEn) constructedSentenceEn.textContent = '';
+    if(constructedSentenceSi) constructedSentenceSi.textContent = '';
+    
+    updateConstructedSentences(); // Initialize sentence display
+}
+
+function updateConstructedSentences() {
+    const getSelectedText = (selectElement) => {
+        if (!selectElement || selectElement.selectedIndex === 0 || selectElement.value === "") return ""; // Guard against null and "--Select--"
+        return selectElement.options[selectElement.selectedIndex].text;
+    };
+
+    // English sentence
+    const enSub = getSelectedText(subjectEnSelect);
+    const enVerb = getSelectedText(verbEnSelect);
+    const enObj = getSelectedText(objectEnSelect);
+    let enSentence = `${enSub} ${enVerb} ${enObj}.`.replace(/\s\s+/g, ' ').trim();
+    if (enSentence === '.') enSentence = ''; // Clear if only period
+    constructedSentenceEn.textContent = enSentence;
+
+    // Sinhala sentence
+    const siSub = getSelectedText(subjectSiSelect);
+    const siVerb = getSelectedText(verbSiSelect);
+    const siObj = getSelectedText(objectSiSelect);
+    // Standard Sinhala sentence order: Subject + Object + Verb
+    let siSentence = `${siSub} ${siObj} ${siVerb}.`.replace(/\s\s+/g, ' ').trim();
+    if (siSentence === '.') siSentence = ''; // Clear if only period
+    constructedSentenceSi.textContent = siSentence;
+}
+
+
+function startSentencePractice() {
+    sentencePracticeActive = true;
+
+    // Hide main view sections & quiz section
+    if (flashcardSection) flashcardSection.style.display = 'none';
+    if (navigationControls) navigationControls.style.display = 'none';
+    if (progressDisplay) progressDisplay.style.display = 'none';
+    if (searchSection) searchSection.style.display = 'none';
+    if (startQuizButton) startQuizButton.style.display = 'none';
+    if (startSentenceButton) startSentenceButton.style.display = 'none';
+    if (quizSection) quizSection.style.display = 'none';
+
+
+    // Show sentence structure section
+    sentenceStructureSection.style.display = 'block';
+    if(sentenceFeedback) sentenceFeedback.textContent = ''; // Clear previous feedback
+
+    // Load components (which will then populate dropdowns)
+    // Check if data is already loaded to avoid multiple fetches if desired,
+    // but for now, always reload for simplicity on start.
+    loadSentenceComponents(); 
+}
+
+function exitSentencePractice() {
+    sentencePracticeActive = false;
+    if(sentenceStructureSection) sentenceStructureSection.style.display = 'none';
+
+    // Show main view sections (make sure Start Quiz and Start Sentence buttons reappear)
+    if (flashcardSection) flashcardSection.style.display = 'block'; // Or appropriate display type
+    if (navigationControls) navigationControls.style.display = 'block'; // Or appropriate
+    if (progressDisplay) progressDisplay.style.display = 'block';
+    if (searchSection) searchSection.style.display = 'block'; // Or appropriate
+    if (startQuizButton) startQuizButton.style.display = 'inline-block';
+    if (startSentenceButton) startSentenceButton.style.display = 'inline-block';
+
+
+    // Optionally reset main view to a default state
+    currentWordIndex = 0;
+    if (words.length > 0) {
+        displayWord();
+        updateProgress();
+    }
+}
+
+// Event Listeners for Sentence Practice
+if (startSentenceButton) startSentenceButton.addEventListener('click', startSentencePractice);
+if (exitSentenceButton) exitSentenceButton.addEventListener('click', exitSentencePractice);
+
+// Helper function to find an item by ID in one of the component arrays
+function findComponentById(id, componentType) {
+    let arrayToSearch;
+    if (componentType === 'subject') arrayToSearch = sentenceSubjects;
+    else if (componentType === 'verb') arrayToSearch = sentenceVerbs;
+    else if (componentType === 'object') arrayToSearch = sentenceObjects;
+    else return null;
+    return arrayToSearch.find(item => item.id === id);
+}
+
+// Synchronization logic function
+function syncDropdowns(sourceSelect, targetSelect, componentType) {
+    const selectedId = sourceSelect.value;
+    if (selectedId) {
+        targetSelect.value = selectedId;
+    } else {
+        targetSelect.value = ""; // Reset target if source is "--Select--"
+    }
+    updateConstructedSentences(); // Update sentences after any sync
+}
+
+function handleCheckSentence() {
+    const selectedSubjectId = subjectEnSelect.value;
+    const selectedVerbId = verbEnSelect.value;
+    // Object ID is not needed for this grammar check
+    // const selectedObjectId = objectEnSelect.value; 
+
+    if (!selectedSubjectId || !selectedVerbId) {
+        sentenceFeedback.textContent = "Please select a subject and a verb to check grammar.";
+        sentenceFeedback.className = 'incorrect'; // Or a neutral class
+        return;
+    }
+
+    // Define which subjects require base verb forms vs. 3rd person singular (-s) forms
+    const subjectsRequiringBaseForm = ["s01", "s02", "s03", "s04"]; // I, we, you, they
+    const subjectsRequiring3psForm = ["s05", "s06", "s07", "s08", "s09"]; // He, She, it, The Cat, Amila
+
+    let requiredVerbFormType = "";
+    if (subjectsRequiringBaseForm.includes(selectedSubjectId)) {
+        requiredVerbFormType = "_base";
+    } else if (subjectsRequiring3psForm.includes(selectedSubjectId)) {
+        requiredVerbFormType = "_3ps";
+    } else {
+        // Should not happen if all subjects are categorized
+        sentenceFeedback.textContent = "Error: Subject category not recognized.";
+        sentenceFeedback.className = 'incorrect';
+        return;
+    }
+
+    // Check if the selected verb ID contains the required form type
+    if (selectedVerbId.endsWith(requiredVerbFormType)) {
+        sentenceFeedback.textContent = "Correct! The subject and verb agree for Simple Present Tense.";
+        sentenceFeedback.className = 'correct';
+    } else {
+        sentenceFeedback.textContent = "Grammar check: The chosen verb form does not agree with the subject in the Simple Present Tense. Please try a different verb form.";
+        sentenceFeedback.className = 'incorrect';
+    }
+}
+
+// Attach event listeners for dropdown synchronization
+// English dropdowns
+if (subjectEnSelect) subjectEnSelect.addEventListener('change', () => syncDropdowns(subjectEnSelect, subjectSiSelect, 'subject'));
+if (verbEnSelect) verbEnSelect.addEventListener('change', () => syncDropdowns(verbEnSelect, verbSiSelect, 'verb'));
+if (objectEnSelect) objectEnSelect.addEventListener('change', () => syncDropdowns(objectEnSelect, objectSiSelect, 'object'));
+
+// Sinhala dropdowns
+if (subjectSiSelect) subjectSiSelect.addEventListener('change', () => syncDropdowns(subjectSiSelect, subjectEnSelect, 'subject'));
+if (verbSiSelect) verbSiSelect.addEventListener('change', () => syncDropdowns(verbSiSelect, verbEnSelect, 'verb'));
+if (objectSiSelect) objectSiSelect.addEventListener('change', () => syncDropdowns(objectSiSelect, objectEnSelect, 'object'));
+
+if (checkSentenceButton) checkSentenceButton.addEventListener('click', handleCheckSentence);

@@ -634,7 +634,7 @@ function handleCheckSentence() {
         sentenceFeedback.textContent = "Correct! The subject and verb agree for Simple Present Tense.";
         sentenceFeedback.className = 'correct';
     } else {
-        sentenceFeedback.textContent = "Grammar check: The chosen verb form does not agree with the subject in the Simple Present Tense. Please try a different verb form.";
+        sentenceFeedback.textContent = "තෝරාගත් ක්‍රියා පද අවස්ථාව සරල වර්තමාන කාලයෙහිදී කතෘ සමඟ එකඟ වෙන්නේ නෑ. අනෙක් අවස්ථාව තෝරා නැවත උත්සාහ කරන්න.";
         sentenceFeedback.className = 'incorrect';
     }
 }

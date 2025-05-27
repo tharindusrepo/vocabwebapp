@@ -40,6 +40,9 @@ const navFlashcards = document.getElementById('nav-flashcards');
 const navQuiz = document.getElementById('nav-quiz');
 const navSentencePractice = document.getElementById('nav-sentence-practice');
 const sidebarLinks = [navFlashcards, navQuiz, navSentencePractice].filter(el => el != null);
+const sidebar = document.getElementById('sidebar'); // Ensure this is defined (should be if sidebarLinks is used)
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const mainContentAreaForOverlay = document.getElementById('main-content-area');
 
 
 // Sentence Practice DOM References

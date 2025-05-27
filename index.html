@@ -17,39 +17,44 @@
         </aside>
         <div id="main-content-area">
             <header>
+                <button id="sidebar-toggle" title="Toggle Menu">☰</button>
                 <div id="header-content">
                     <h1>English Lab</h1>
                     <p id="author-credit">by Tharindu K. Jayasinghe</p>
                 </div>
                 <button id="home-button" class="header-nav-button">🏠 Home</button>
             </header>
-            <section id="search-section">
-                <input type="text" id="search-input" placeholder="Search for a word...">
-            </section>
-            <section id="flashcard-section">
-                <div class="flashcard-container">
-                    <div class="flashcard">
-                        <div class="flashcard-front">
-                            <!-- English word will appear here -->
-                            <img id="word-image" src="" alt="Word illustration" style="display: none;">
-                        </div>
-                        <div class="flashcard-back">
-                            <!-- Sinhala translation will appear here -->
+            <div id="flashcard-wrapper">
+                <section id="search-section">
+                    <input type="text" id="search-input" placeholder="Search for a word...">
+                </section>
+                <section id="flashcard-section">
+                    <div class="flashcard-container">
+                        <div class="flashcard">
+                            <div class="flashcard-front">
+                                <!-- English word will appear here -->
+                                <img id="word-image" src="" alt="Word illustration" style="display: none;">
+                            </div>
+                            <div class="flashcard-back">
+                                <!-- Sinhala translation will appear here -->
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section id="progress-display">
-                <div id="progress-container">
-                    <!-- Progress text will appear here (e.g., "Word X of Y") -->
-                </div>
-            </section>
-            <section id="navigation-controls">
-                <button id="prev-button">Previous</button>
-                <button id="next-button">Next</button>
-            </section>
-            <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
-            <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
+                </section>
+                <section id="progress-display">
+                    <div id="progress-container">
+                        <!-- Progress text will appear here (e.g., "Word X of Y") -->
+                    </div>
+                </section>
+                <section id="navigation-controls">
+                    <button id="prev-button">Previous</button>
+                    <button id="next-button">Next</button>
+                </section>
+            </div>
+            <div class="mode-start-buttons-container">
+                <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
+                <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
+            </div>
             
             <section id="quiz-section" style="display: none;">
                 <h2>Quiz Mode</h2>

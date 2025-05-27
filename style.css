@@ -9,7 +9,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0; /* Ensure no default padding */
-    background-color: #e9ecef; /* Light grey page background */
+    background-color: #FFDF00; /* Changed */
     color: #333; /* Default text color */
     line-height: 1.6; /* Improve readability */
 }
@@ -76,6 +76,17 @@ header { /* This is now #main-content-area header */
     background-color: #0056b3; 
 }
 
+#sidebar-toggle {
+    display: none; /* Hidden by default on desktop */
+    font-size: 1.5rem; /* Make the icon larger */
+    background-color: transparent;
+    color: #333; /* Match header text color */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 10px; /* Space between toggle and title block */
+}
+
 /* App Container and Sidebar/Main Content Area Layout */
 #app-container {
     display: flex;
@@ -122,10 +133,23 @@ header { /* This is now #main-content-area header */
 #main-content-area {
     flex-grow: 1; /* Takes remaining horizontal space */
     padding: 30px; /* Generous padding around content */
-    background-color: #fff; /* White background for the content area */
+    background-color: transparent; /* Changed */
     overflow-y: auto; /* Add scroll if content overflows vertically */
 }
 
+#flashcard-wrapper {
+    background-color: #fff; /* White background */
+    padding: 25px;         /* Padding inside the wrapper */
+    border-radius: 8px;    /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    /* margin-bottom: 20px; */ /* This margin is now handled by .mode-start-buttons-container */
+}
+
+.mode-start-buttons-container {
+    text-align: center; /* Center the buttons within the container */
+    margin-top: 20px;   /* Replaces #flashcard-wrapper's bottom margin */
+    padding-bottom: 10px; /* Add some padding at the bottom of the content area */
+}
 
 /* Flashcard */
 #flashcard-section {
@@ -534,6 +558,7 @@ footer {
 }
 
 @media (max-width: 768px) { /* Or a suitable breakpoint */
+    /* Previous .lang-section and .component-group rules remain */
     .lang-section {
         flex-direction: column; /* Stack component groups vertically */
         align-items: stretch; /* Make groups take full width */
@@ -543,6 +568,32 @@ footer {
         margin-right: 0;
         margin-bottom: 10px; /* Space between stacked groups */
         flex-basis: auto; /* Reset flex-basis for stacked layout */
+    }
+
+    /* Sidebar and Toggle Button Visibility for Mobile */
+    #sidebar {
+        position: fixed; /* Position it off-screen for sliding */
+        left: -250px;  /* Start off-screen (adjust width if sidebar width changes) */
+        top: 0;
+        width: 230px;   /* Match the original sidebar width */
+        height: 100%;   /* Full height */
+        z-index: 1000;  /* Ensure it's on top */
+        transition: left 0.3s ease-in-out; /* Smooth slide-in animation */
+        /* background-color and color are already set */
+        overflow-y: auto; /* Allow scrolling within sidebar if content is tall */
+    }
+
+    #sidebar.visible { /* This class will be toggled by JS */
+        left: 0; /* Slide it into view */
+    }
+
+    #sidebar-toggle {
+        display: inline-block; /* Show the toggle button on mobile */
+    }
+    
+    /* Adjust main content area header for the toggle button */
+    #main-content-area header {
+         /* padding-left might need adjustment if toggle is too cramped */
     }
     /* #sentence-structure-section select styles (width: 100%, box-sizing) from above apply well here */
     /* #sentence-structure-section label styles (margin-bottom: 5px) from above apply well here */

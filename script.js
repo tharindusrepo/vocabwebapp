@@ -35,6 +35,13 @@ const restartQuizButton = document.getElementById('restart-quiz-button');
 const exitQuizButton = document.getElementById('exit-quiz-button');
 const homeButton = document.getElementById('home-button');
 
+// Sidebar Navigation DOM References
+const navFlashcards = document.getElementById('nav-flashcards');
+const navQuiz = document.getElementById('nav-quiz');
+const navSentencePractice = document.getElementById('nav-sentence-practice');
+const sidebarLinks = [navFlashcards, navQuiz, navSentencePractice].filter(el => el != null);
+
+
 // Sentence Practice DOM References
 const startSentenceButton = document.getElementById('start-sentence-button');
 const sentenceStructureSection = document.getElementById('sentence-structure-section');
@@ -56,6 +63,12 @@ const flashcardSection = document.getElementById('flashcard-section');
 const navigationControls = document.getElementById('navigation-controls');
 const progressDisplay = document.getElementById('progress-display'); // Main progress, not quiz
 const searchSection = document.getElementById('search-section');
+
+// Group flashcard related elements for easier show/hide
+const flashcardViewElements = [
+    searchSection, flashcardSection, progressDisplay, navigationControls, 
+    startQuizButton, startSentenceButton
+].filter(el => el != null); // Filter out nulls if some elements don't exist
 
 
 // Fetch Words
@@ -204,16 +217,12 @@ function startQuiz() {
     currentQuizWordIndex = 0;
     quizWords = []; // Clear previous quiz words
 
-    // Hide main view sections
-    if (flashcardSection) flashcardSection.style.display = 'none';
-    if (navigationControls) navigationControls.style.display = 'none';
-    if (progressDisplay) progressDisplay.style.display = 'none';
-    if (searchSection) searchSection.style.display = 'none';
+    // showMainSection will handle hiding other sections
     if (startQuizButton) startQuizButton.style.display = 'none'; // Hide start quiz button itself
-
+    
     // Show quiz section and relevant parts
-    quizSection.style.display = 'block';
-    quizQuestionWordDisplay.style.display = 'flex'; // Since it has flex properties
+    if (quizSection) quizSection.style.display = 'block';
+    if (quizQuestionWordDisplay) quizQuestionWordDisplay.style.display = 'flex'; // Since it has flex properties
     quizOptionsContainer.style.display = 'flex'; // Since it's styled with flex
     quizProgressDisplay.style.display = 'block';
     quizFeedbackDisplay.style.display = 'block'; // Or 'none' initially, then shown with feedback
@@ -396,22 +405,9 @@ nextQuizQuestionButton.addEventListener('click', () => {
 
 function exitQuiz() {
     quizActive = false;
-    quizSection.style.display = 'none';
+    // quizSection.style.display = 'none'; // showMainSection will handle this
 
-    // Show main view sections
-    // Use 'flex' for flashcard-container like elements, 'block' for others
-    if (flashcardSection) flashcardSection.style.display = 'block'; // Assuming main flashcard area is block
-    if (navigationControls) navigationControls.style.display = 'block';
-    if (progressDisplay) progressDisplay.style.display = 'block';
-    if (searchSection) searchSection.style.display = 'block'; 
-    if (startQuizButton) startQuizButton.style.display = 'inline-block'; // Show start quiz button again
-
-    // Optionally reset main view to a default state, e.g., first word
-    currentWordIndex = 0; // Reset main view index
-    if(words.length > 0) { // Check if words are loaded
-        displayWord();
-        updateProgress();
-    }
+    showMainSection('flashcards');
 }
 
 restartQuizButton.addEventListener('click', startQuiz);
@@ -420,42 +416,75 @@ startQuizButton.addEventListener('click', startQuiz);
 
 // Home Button Functionality
 function goHome() {
-    if (quizActive) {
-        exitQuiz(); // This already resets to main view and first word
-    } else if (sentencePracticeActive) {
-        exitSentencePractice();
-    } else {
-        // If not in quiz or sentence mode, ensure all overlay sections are hidden
-        // and main sections are visible
-        if(quizSection) quizSection.style.display = 'none';
-        if(sentenceStructureSection) sentenceStructureSection.style.display = 'none';
+    showMainSection('flashcards');
+}
 
-        if (flashcardSection) flashcardSection.style.display = 'block'; 
-        if (navigationControls) navigationControls.style.display = 'block'; 
-        if (progressDisplay) progressDisplay.style.display = 'block';
-        if (searchSection) searchSection.style.display = 'block'; 
-        if (startQuizButton) startQuizButton.style.display = 'inline-block';
-        if (startSentenceButton) startSentenceButton.style.display = 'inline-block';
+if (homeButton) homeButton.addEventListener('click', goHome);
 
 
-        // Reset main view to the first word
+// Section Navigation Logic
+function showMainSection(sectionIdToShow) {
+    // First, ensure any active modes are properly exited to reset their states
+    if (quizActive && sectionIdToShow !== 'quiz') {
+        // No direct call to exitQuiz() here to avoid loops if called from exitQuiz itself.
+        // Instead, ensure quiz section is hidden if we are not explicitly showing it.
+        if (quizSection) quizSection.style.display = 'none';
+        quizActive = false; // Assume exiting quiz if navigating away
+    }
+    if (sentencePracticeActive && sectionIdToShow !== 'sentencePractice') {
+        if (sentenceStructureSection) sentenceStructureSection.style.display = 'none';
+        sentencePracticeActive = false; // Assume exiting sentence practice
+    }
+
+    // Hide all main content sections first
+    flashcardViewElements.forEach(el => el.style.display = 'none');
+    if (quizSection) quizSection.style.display = 'none';
+    if (sentenceStructureSection) sentenceStructureSection.style.display = 'none';
+
+    // Update active class on sidebar
+    sidebarLinks.forEach(link => {
+        if (link) link.classList.remove('active');
+    });
+
+    // Show the requested section
+    if (sectionIdToShow === 'flashcards') {
+        flashcardViewElements.forEach(el => {
+            if (el.tagName === 'BUTTON') {
+                el.style.display = 'inline-block'; // Or its specific default like 'block' if it's full-width
+            } else {
+                 // Check if the element is part of #navigation-controls and set to flex
+                if (el.id === 'navigation-controls') {
+                    el.style.display = 'flex'; 
+                } else {
+                    el.style.display = 'block';
+                }
+            }
+        });
+        // Explicitly set display for elements if the loop isn't specific enough
+        // e.g., navigationControls might be 'flex'
+        if(searchSection) searchSection.style.display = 'block';
+        if(flashcardSection) flashcardSection.style.display = 'block'; 
+        if(progressDisplay) progressDisplay.style.display = 'block';
+        if(navigationControls) navigationControls.style.display = 'flex'; // Ensure flex for nav controls
+        if(startQuizButton) startQuizButton.style.display = 'inline-block';
+        if(startSentenceButton) startSentenceButton.style.display = 'inline-block';
+        
+        if (navFlashcards) navFlashcards.classList.add('active');
+        // Reset to first word if navigating to flashcards view
         currentWordIndex = 0;
         if (words.length > 0) {
             displayWord();
             updateProgress();
-        } else {
-            flashcardFront.textContent = 'N/A';
-            flashcardBack.textContent = 'N/A';
-            if (wordImage) wordImage.style.display = 'none';
-            progressContainer.textContent = 'No words loaded.';
         }
-        // Ensure flashcard is not flipped and search input is clear
-        flashcard.classList.remove('flipped');
-        if (searchInput) searchInput.value = ''; 
+    } else if (sectionIdToShow === 'quiz') {
+        if (navQuiz) navQuiz.classList.add('active');
+        startQuiz(); // startQuiz will handle showing quizSection
+    } else if (sectionIdToShow === 'sentencePractice') {
+        if (navSentencePractice) navSentencePractice.classList.add('active');
+        startSentencePractice(); // startSentencePractice will handle its section
     }
 }
 
-if (homeButton) homeButton.addEventListener('click', goHome);
 
 // Sentence Structure Practice Functions
 
@@ -535,18 +564,11 @@ function updateConstructedSentences() {
 function startSentencePractice() {
     sentencePracticeActive = true;
 
-    // Hide main view sections & quiz section
-    if (flashcardSection) flashcardSection.style.display = 'none';
-    if (navigationControls) navigationControls.style.display = 'none';
-    if (progressDisplay) progressDisplay.style.display = 'none';
-    if (searchSection) searchSection.style.display = 'none';
-    if (startQuizButton) startQuizButton.style.display = 'none';
+    // showMainSection will handle hiding other sections
     if (startSentenceButton) startSentenceButton.style.display = 'none';
-    if (quizSection) quizSection.style.display = 'none';
-
 
     // Show sentence structure section
-    sentenceStructureSection.style.display = 'block';
+    if (sentenceStructureSection) sentenceStructureSection.style.display = 'block';
     if(sentenceFeedback) sentenceFeedback.textContent = ''; // Clear previous feedback
 
     // Load components (which will then populate dropdowns)
@@ -557,28 +579,19 @@ function startSentencePractice() {
 
 function exitSentencePractice() {
     sentencePracticeActive = false;
-    if(sentenceStructureSection) sentenceStructureSection.style.display = 'none';
-
-    // Show main view sections (make sure Start Quiz and Start Sentence buttons reappear)
-    if (flashcardSection) flashcardSection.style.display = 'block'; // Or appropriate display type
-    if (navigationControls) navigationControls.style.display = 'block'; // Or appropriate
-    if (progressDisplay) progressDisplay.style.display = 'block';
-    if (searchSection) searchSection.style.display = 'block'; // Or appropriate
-    if (startQuizButton) startQuizButton.style.display = 'inline-block';
-    if (startSentenceButton) startSentenceButton.style.display = 'inline-block';
-
-
-    // Optionally reset main view to a default state
-    currentWordIndex = 0;
-    if (words.length > 0) {
-        displayWord();
-        updateProgress();
-    }
+    // if(sentenceStructureSection) sentenceStructureSection.style.display = 'none'; // showMainSection handles this
+    
+    showMainSection('flashcards');
 }
 
 // Event Listeners for Sentence Practice
 if (startSentenceButton) startSentenceButton.addEventListener('click', startSentencePractice);
 if (exitSentenceButton) exitSentenceButton.addEventListener('click', exitSentencePractice);
+
+// Sidebar Navigation Event Listeners
+if (navFlashcards) navFlashcards.addEventListener('click', (e) => { e.preventDefault(); showMainSection('flashcards'); });
+if (navQuiz) navQuiz.addEventListener('click', (e) => { e.preventDefault(); showMainSection('quiz'); });
+if (navSentencePractice) navSentencePractice.addEventListener('click', (e) => { e.preventDefault(); showMainSection('sentencePractice'); });
 
 // Helper function to find an item by ID in one of the component arrays
 function findComponentById(id, componentType) {
@@ -651,3 +664,10 @@ if (verbSiSelect) verbSiSelect.addEventListener('change', () => syncDropdowns(ve
 if (objectSiSelect) objectSiSelect.addEventListener('change', () => syncDropdowns(objectSiSelect, objectEnSelect, 'object'));
 
 if (checkSentenceButton) checkSentenceButton.addEventListener('click', handleCheckSentence);
+
+// Initial Load
+document.addEventListener('DOMContentLoaded', () => {
+    loadWords(); // Existing call
+    // Any other init calls
+    showMainSection('flashcards'); // Set initial view
+});

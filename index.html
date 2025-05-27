@@ -3,106 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English-Sinhala Sight Words</title>
+    <title>English Lab</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div id="header-content">
-            <h1>English-Sinhala Sight Words</h1>
-            <p id="author-credit">by Tharindu K. Jayasinghe</p>
-        </div>
-        <button id="home-button" class="header-nav-button">🏠 Home</button>
-    </header>
-    <main>
-        <section id="search-section">
-            <input type="text" id="search-input" placeholder="Search for a word...">
-        </section>
-        <section id="flashcard-section">
-            <div class="flashcard-container">
-                <div class="flashcard">
-                    <div class="flashcard-front">
-                        <!-- English word will appear here -->
-                        <img id="word-image" src="" alt="Word illustration" style="display: none;">
-                    </div>
-                    <div class="flashcard-back">
-                        <!-- Sinhala translation will appear here -->
+    <div id="app-container">
+        <aside id="sidebar">
+            <ul>
+                <li><a href="#" id="nav-flashcards">Flashcards</a></li>
+                <li><a href="#" id="nav-quiz">Quiz Mode</a></li>
+                <li><a href="#" id="nav-sentence-practice">Sentence Practice</a></li>
+            </ul>
+        </aside>
+        <div id="main-content-area">
+            <header>
+                <div id="header-content">
+                    <h1>English Lab</h1>
+                    <p id="author-credit">by Tharindu K. Jayasinghe</p>
+                </div>
+                <button id="home-button" class="header-nav-button">🏠 Home</button>
+            </header>
+            <section id="search-section">
+                <input type="text" id="search-input" placeholder="Search for a word...">
+            </section>
+            <section id="flashcard-section">
+                <div class="flashcard-container">
+                    <div class="flashcard">
+                        <div class="flashcard-front">
+                            <!-- English word will appear here -->
+                            <img id="word-image" src="" alt="Word illustration" style="display: none;">
+                        </div>
+                        <div class="flashcard-back">
+                            <!-- Sinhala translation will appear here -->
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section id="progress-display">
-            <div id="progress-container">
-                <!-- Progress text will appear here (e.g., "Word X of Y") -->
-            </div>
-        </section>
-        <section id="navigation-controls">
-            <button id="prev-button">Previous</button>
-            <button id="next-button">Next</button>
-        </section>
-        <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
-        <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
-    </main>
-    <section id="quiz-section" style="display: none;">
-        <h2>Quiz Mode</h2>
-        <div id="quiz-progress">Question X of Y | Score: Z</div>
-        <div id="quiz-question-word" class="flashcard-container" style="min-height: 150px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px;">
-            <!-- Question word will appear here -->
+            </section>
+            <section id="progress-display">
+                <div id="progress-container">
+                    <!-- Progress text will appear here (e.g., "Word X of Y") -->
+                </div>
+            </section>
+            <section id="navigation-controls">
+                <button id="prev-button">Previous</button>
+                <button id="next-button">Next</button>
+            </section>
+            <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
+            <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
+            
+            <section id="quiz-section" style="display: none;">
+                <h2>Quiz Mode</h2>
+                <div id="quiz-progress">Question X of Y | Score: Z</div>
+                <div id="quiz-question-word" class="flashcard-container" style="min-height: 150px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px;">
+                    <!-- Question word will appear here -->
+                </div>
+                <div id="quiz-options-container">
+                    <!-- Answer option buttons will be dynamically added here -->
+                </div>
+                <div id="quiz-feedback" style="min-height: 30px; margin-top: 15px; font-weight: bold;">
+                    <!-- Feedback like "Correct!" or "Incorrect!" -->
+                </div>
+                <button id="next-quiz-question" class="quiz-button" style="display: none; margin-top: 15px;">Next Question</button>
+                <div id="quiz-results" style="display: none; margin-top: 20px; font-size: 1.2rem;">
+                    <!-- Final score and summary will appear here -->
+                </div>
+                <button id="restart-quiz-button" class="quiz-button" style="display: none; margin-top: 15px;">Restart Quiz</button>
+                <button id="exit-quiz-button" class="quiz-button" style="display: none; margin-top: 10px; margin-left:10px;">Exit Quiz</button>
+            </section>
+            <section id="sentence-structure-section" style="display: none;">
+                <h2>Sentence Structure Practice (Simple Present)</h2>
+                <div class="lang-section" id="english-sentence-builder">
+                    <h3>English</h3>
+                    <div class="component-group">
+                        <label for="subject-en">Subject:</label>
+                        <select id="subject-en"></select>
+                    </div>
+                    <div class="component-group">
+                        <label for="verb-en">Verb:</label>
+                        <select id="verb-en"></select>
+                    </div>
+                    <div class="component-group">
+                        <label for="object-en">Object:</label>
+                        <select id="object-en"></select>
+                    </div>
+                    <p id="constructed-sentence-en" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
+                </div>
+                <hr style="margin: 20px 0;">
+                <div class="lang-section" id="sinhala-sentence-builder">
+                    <h3>Sinhala</h3>
+                    <div class="component-group">
+                        <label for="subject-si">Subject (කර්තෘ):</label>
+                        <select id="subject-si"></select>
+                    </div>
+                    <div class="component-group">
+                        <label for="verb-si">Verb (ක්‍රියා පදය):</label>
+                        <select id="verb-si"></select>
+                    </div>
+                    <div class="component-group">
+                        <label for="object-si">Object (කර්මය):</label>
+                        <select id="object-si"></select>
+                    </div>
+                    <p id="constructed-sentence-si" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
+                </div>
+                <div style="margin-top: 25px; text-align:center;">
+                    <button id="check-sentence-button" class="quiz-button">Check Sentence</button>
+                    <div id="sentence-feedback" style="min-height: 25px; margin-top: 10px; font-weight: bold;"></div>
+                    <button id="exit-sentence-button" class="quiz-button" style="margin-top:15px;">Exit Practice</button>
+                </div>
+            </section>
         </div>
-        <div id="quiz-options-container">
-            <!-- Answer option buttons will be dynamically added here -->
-        </div>
-        <div id="quiz-feedback" style="min-height: 30px; margin-top: 15px; font-weight: bold;">
-            <!-- Feedback like "Correct!" or "Incorrect!" -->
-        </div>
-        <button id="next-quiz-question" class="quiz-button" style="display: none; margin-top: 15px;">Next Question</button>
-        <div id="quiz-results" style="display: none; margin-top: 20px; font-size: 1.2rem;">
-            <!-- Final score and summary will appear here -->
-        </div>
-        <button id="restart-quiz-button" class="quiz-button" style="display: none; margin-top: 15px;">Restart Quiz</button>
-        <button id="exit-quiz-button" class="quiz-button" style="display: none; margin-top: 10px; margin-left:10px;">Exit Quiz</button>
-    </section>
-    <section id="sentence-structure-section" style="display: none;">
-        <h2>Sentence Structure Practice (Simple Present)</h2>
-        <div class="lang-section" id="english-sentence-builder">
-            <h3>English</h3>
-            <div class="component-group">
-                <label for="subject-en">Subject:</label>
-                <select id="subject-en"></select>
-            </div>
-            <div class="component-group">
-                <label for="verb-en">Verb:</label>
-                <select id="verb-en"></select>
-            </div>
-            <div class="component-group">
-                <label for="object-en">Object:</label>
-                <select id="object-en"></select>
-            </div>
-            <p id="constructed-sentence-en" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
-        </div>
-        <hr style="margin: 20px 0;">
-        <div class="lang-section" id="sinhala-sentence-builder">
-            <h3>Sinhala</h3>
-            <div class="component-group">
-                <label for="subject-si">Subject (කර්තෘ):</label>
-                <select id="subject-si"></select>
-            </div>
-            <div class="component-group">
-                <label for="verb-si">Verb (ක්‍රියා පදය):</label>
-                <select id="verb-si"></select>
-            </div>
-            <div class="component-group">
-                <label for="object-si">Object (කර්මය):</label>
-                <select id="object-si"></select>
-            </div>
-            <p id="constructed-sentence-si" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
-        </div>
-        <div style="margin-top: 25px; text-align:center;">
-            <button id="check-sentence-button" class="quiz-button">Check Sentence</button>
-            <div id="sentence-feedback" style="min-height: 25px; margin-top: 10px; font-weight: bold;"></div>
-            <button id="exit-sentence-button" class="quiz-button" style="margin-top:15px;">Exit Practice</button>
-        </div>
-    </section>
+    </div>
     <footer>
         <p>© Tharindu K. Jayasinghe | Beta Version | 2025</p>
     </footer>

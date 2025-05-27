@@ -6,26 +6,30 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0; /* Ensure no default padding */
+    background-color: #e9ecef; /* Light grey page background */
+    color: #333; /* Default text color */
+    line-height: 1.6; /* Improve readability */
 }
 
-main {
-    max-width: 800px;
-    width: 90%;
-    margin: 20px auto;
-    text-align: center;
-}
+/* Removed old main {} rule */
 
 /* Header */
-header {
-    background-color: #333;
+/* Global header styles are now more specific to #main-content-area header below */
+header { /* This is now #main-content-area header */
+    background-color: transparent; /* Remove its own background */
+    color: #333; /* Use main text color */
+    padding: 0 0 20px 0; /* Padding only at the bottom */
+    width: 100%;
+    margin-bottom: 25px; /* Space below header before other content */
+    border-bottom: 1px solid #dee2e6; /* Subtle bottom border */
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+}
     color: #fff;
     padding: 0.5rem 1rem; /* Adjusted padding slightly for better balance with flex items */
     width: 100%;
@@ -41,40 +45,91 @@ header {
     flex-grow: 1; /* Allow this to take up available space if needed */
 }
 
-header h1 { /* Existing style, just for context */
+/* Specificity for header elements within #main-content-area */
+#main-content-area header h1 { 
     margin: 0;
-    font-size: 1.8rem;
-    /* No change needed unless it causes issues with author credit spacing */
+    font-size: 1.8rem; 
+    color: #343a40; /* Darker color for title */
 }
 
-#author-credit {
-    font-size: 0.75rem; /* Make it small */
-    color: #ccc;      /* Lighter color, but visible on dark header */
-    margin-top: 2px;   /* Small space below H1 */
-    margin-bottom: 0;  /* No extra margin below it if header padding handles it */
+#main-content-area #author-credit {
+    font-size: 0.8rem; /* Existing size */
+    color: #6c757d; /* Muted color for author credit */
+    margin-top: 2px;   
+    margin-bottom: 0;  
     font-weight: normal;
 }
 
-.header-nav-button { /* General class for buttons in header */
-    background-color: #007bff; /* Blue, similar to Start Quiz or a distinct primary color */
+#main-content-area .header-nav-button { 
+    background-color: #007bff; /* Keep it distinct */
     color: white;
     border: none;
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.9rem;
-    text-decoration: none; /* If it were an <a> tag */
+    text-decoration: none; 
     transition: background-color 0.3s;
-    margin-left: 10px; /* Space from the title block if on the same line */
+    margin-left: 10px; 
 }
-.header-nav-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+#main-content-area .header-nav-button:hover {
+    background-color: #0056b3; 
 }
-/* If #home-button needs specific overrides, they can be added, but class should be enough. */
+
+/* App Container and Sidebar/Main Content Area Layout */
+#app-container {
+    display: flex;
+    min-height: 100vh; /* Ensure it takes at least full viewport height */
+}
+
+#sidebar {
+    width: 230px; /* Fixed width for the sidebar */
+    background-color: #343a40; /* Dark background */
+    color: #fff; /* White text for sidebar */
+    padding: 20px 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on the right */
+    display: flex; /* Use flex to make its content (ul) take full height if needed */
+    flex-direction: column;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Make ul take full width of sidebar */
+}
+
+#sidebar li {
+    margin-bottom: 5px; /* Space between nav items */
+}
+
+#sidebar a {
+    display: block;
+    color: #adb5bd; /* Light text color for links */
+    padding: 12px 18px; /* Increased padding for better touch targets */
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners for links */
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 1rem; /* Slightly larger font for nav links */
+}
+
+#sidebar a:hover,
+#sidebar a.active { /* Class to be added by JS for active link */
+    background-color: #495057; /* Darker background on hover/active */
+    color: #fff; /* White text on hover/active */
+}
+
+#main-content-area {
+    flex-grow: 1; /* Takes remaining horizontal space */
+    padding: 30px; /* Generous padding around content */
+    background-color: #fff; /* White background for the content area */
+    overflow-y: auto; /* Add scroll if content overflows vertically */
+}
+
 
 /* Flashcard */
 #flashcard-section {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* This existing style should be fine */
     perspective: 1000px; /* For 3D effect */
 }
 

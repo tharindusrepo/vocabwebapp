@@ -4,123 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="app-container">
-        <aside id="sidebar">
-            <ul>
-                <li><a href="#" id="nav-flashcards">Flashcards</a></li>
-                <li><a href="#" id="nav-quiz">Quiz Mode</a></li>
-                <li><a href="#" id="nav-sentence-practice">Sentence Practice</a></li>
-            </ul>
-        </aside>
-        <div id="main-content-area">
-            <header>
-                <button id="sidebar-toggle" title="Toggle Menu">☰</button>
-                <div id="header-content">
-                    <h1>English Lab</h1>
-                    <p id="author-credit">by Tharindu K. Jayasinghe</p>
-                </div>
-                <button id="home-button" class="header-nav-button">🏠 Home</button>
-            </header>
-            <div id="flashcard-wrapper">
-                <section id="search-section">
-                    <input type="text" id="search-input" placeholder="Search for a word...">
-                </section>
-                <section id="flashcard-section">
-                    <div class="flashcard-container">
-                        <div class="flashcard">
-                            <div class="flashcard-front">
-                                <!-- English word will appear here -->
-                                <img id="word-image" src="" alt="Word illustration" style="display: none;">
-                            </div>
-                            <div class="flashcard-back">
-                                <!-- Sinhala translation will appear here -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section id="progress-display">
-                    <div id="progress-container">
-                        <!-- Progress text will appear here (e.g., "Word X of Y") -->
-                    </div>
-                </section>
-                <section id="navigation-controls">
-                    <button id="prev-button">Previous</button>
-                    <button id="next-button">Next</button>
-                </section>
-            </div>
-            <div class="mode-start-buttons-container">
-                <button id="start-quiz-button" class="quiz-button">🎓 Start Quiz</button>
-                <button id="start-sentence-button" class="main-action-button">Sentence Practice</button>
-            </div>
-            
-            <section id="quiz-section" style="display: none;">
-                <h2>Quiz Mode</h2>
-                <div id="quiz-progress">Question X of Y | Score: Z</div>
-                <div id="quiz-question-word" class="flashcard-container" style="min-height: 150px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px;">
-                    <!-- Question word will appear here -->
-                </div>
-                <div id="quiz-options-container">
-                    <!-- Answer option buttons will be dynamically added here -->
-                </div>
-                <div id="quiz-feedback" style="min-height: 30px; margin-top: 15px; font-weight: bold;">
-                    <!-- Feedback like "Correct!" or "Incorrect!" -->
-                </div>
-                <button id="next-quiz-question" class="quiz-button" style="display: none; margin-top: 15px;">Next Question</button>
-                <div id="quiz-results" style="display: none; margin-top: 20px; font-size: 1.2rem;">
-                    <!-- Final score and summary will appear here -->
-                </div>
-                <button id="restart-quiz-button" class="quiz-button" style="display: none; margin-top: 15px;">Restart Quiz</button>
-                <button id="exit-quiz-button" class="quiz-button" style="display: none; margin-top: 10px; margin-left:10px;">Exit Quiz</button>
-            </section>
-            <section id="sentence-structure-section" style="display: none;">
-                <h2>Sentence Structure Practice (Simple Present)</h2>
-                <div class="lang-section" id="english-sentence-builder">
-                    <h3>English</h3>
-                    <div class="component-group">
-                        <label for="subject-en">Subject:</label>
-                        <select id="subject-en"></select>
-                    </div>
-                    <div class="component-group">
-                        <label for="verb-en">Verb:</label>
-                        <select id="verb-en"></select>
-                    </div>
-                    <div class="component-group">
-                        <label for="object-en">Object:</label>
-                        <select id="object-en"></select>
-                    </div>
-                    <p id="constructed-sentence-en" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
-                </div>
-                <hr style="margin: 20px 0;">
-                <div class="lang-section" id="sinhala-sentence-builder">
-                    <h3>Sinhala</h3>
-                    <div class="component-group">
-                        <label for="subject-si">Subject (කර්තෘ):</label>
-                        <select id="subject-si"></select>
-                    </div>
-                    <div class="component-group">
-                        <label for="verb-si">Verb (ක්‍රියා පදය):</label>
-                        <select id="verb-si"></select>
-                    </div>
-                    <div class="component-group">
-                        <label for="object-si">Object (කර්මය):</label>
-                        <select id="object-si"></select>
-                    </div>
-                    <p id="constructed-sentence-si" class="sentence-display" style="margin-top:10px; font-weight:bold;"></p>
-                </div>
-                <div style="margin-top: 25px; text-align:center;">
-                    <button id="check-sentence-button" class="quiz-button">Check Sentence</button>
-                    <div id="sentence-feedback" style="min-height: 25px; margin-top: 10px; font-weight: bold;"></div>
-                    <button id="exit-sentence-button" class="quiz-button" style="margin-top:15px;">Exit Practice</button>
-                </div>
-            </section>
-        </div>
+<body class="min-h-screen bg-yellow-200 font-sans flex flex-col items-center">
+
+    <!-- Global Header -->
+    <div class="text-center mt-8 mb-8"> <!-- Added mb-8 for spacing -->
+        <h1 class="text-4xl font-bold text-gray-800">English Lab</h1>
+        <p class="text-sm text-gray-600">by Tharindu K. Jayasinghe</p>
+        <!-- Home button could go here if desired globally, e.g.,
+        <button id="home-button-global" class="mt-2 text-sm text-blue-600 hover:underline">Main Menu</button> 
+        For now, let's rely on browser back or future explicit nav buttons within views.
+        -->
     </div>
-    <footer>
-        <p>© Tharindu K. Jayasinghe | Beta Version | 2025</p>
-    </footer>
+
+    <!-- Main Application Views Container -->
+    <div id="app-views-container" class="flex-1 flex flex-col items-center w-full">
+
+        <!-- Main Menu View - DELETED -->
+
+        <!-- Flashcard View (Initially Hidden) -->
+        <div id="flashcard-view" class="hidden flex-1 flex flex-col items-center p-6 w-full max-w-md">
+            <!-- Search Bar -->
+            <div class="mb-6 w-full">
+                <input id="search-input" type="text" placeholder="Search for a word" class="w-full p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-400 text-center">
+            </div>
+
+            <!-- Flashcard Section -->
+            <div id="flashcard-perspective-container" class="bg-white p-6 rounded-lg shadow-lg w-full">
+                <div id="flashcard-interactive-area" class="relative bg-yellow-100 rounded-lg p-12 text-center min-h-[100px] flex justify-center items-center">
+                    <div id="flashcard-content" class="absolute inset-0 flex flex-col justify-center items-center text-center text-2xl font-semibold text-gray-800">
+                        <!-- JS populates inner H2 here -->
+                    </div>
+                    <div id="flashcard-translation" class="absolute inset-0 flex flex-col justify-center items-center text-center rounded-lg text-2xl font-semibold text-gray-800 bg-gray-100"> 
+                        <!-- JS populates inner H2 here -->
+                    </div>
+                </div>
+                <p id="progress-text" class="text-center text-gray-600 mt-4">Word X of Y</p>
+                <div class="flex justify-between mt-6">
+                    <button id="prev-button" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-400 transition">Previous</button>
+                    <button id="next-button" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-400 transition">Next</button>
+                </div>
+                <!-- "Start Quiz" and "Sentence Practice" buttons are REMOVED from here as per plan -->
+            </div>
+            <div class="mode-start-buttons-container mt-6">
+                <button id="start-quiz-button" class="w-full px-4 bg-yellow-400 text-gray-800 py-3 rounded-full hover:bg-yellow-500 transition font-semibold mb-4 text-base">Sight Words Quiz</button>
+                <button id="start-sentence-button" class="w-full px-4 bg-black text-white py-3 rounded-full hover:bg-gray-800 transition font-semibold text-base">Sentence Practice</button>
+            </div>
+            <!-- <button id="back-to-menu-flashcards" class="mt-6 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300 transition">Back to Main Menu</button> DELETED -->
+        </div>
+
+        <!-- Quiz View (Initially Hidden - Placeholder) -->
+        <div id="quiz-view" class="hidden flex-1 flex flex-col items-center p-6 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Quiz Mode</h2>
+            <p class="mb-4">Quiz content will go here...</p>
+            <!-- Quiz UI will be built/adapted here later -->
+            <button id="back-to-flashcards-quiz" class="mt-6 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300 transition">Back to Flashcards</button>
+        </div>
+
+        <!-- Sentence Practice View (Initially Hidden - Placeholder) -->
+        <div id="sentence-practice-view" class="hidden flex-1 flex flex-col items-center p-6 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Sentence Practice</h2>
+            <p class="mb-4">Sentence practice content will go here...</p>
+            <!-- Sentence Practice UI will be built/adapted here later -->
+            <button id="back-to-flashcards-sentence" class="mt-6 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300 transition">Back to Flashcards</button>
+        </div>
+
+    </div> <!-- End of #app-views-container -->
+
+    <!-- Global Footer -->
+    <div class="text-center mb-8 mt-auto pt-6"> <!-- mt-auto to push footer down, pt-6 for spacing -->
+        <p class="text-gray-600 mb-2">For more games, quizzes and other learning materials click here.</p>
+        <button id="footer-action-button" class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition">Click here</button>
+        <p class="text-gray-500 mt-4 text-sm">© Tharindu K. Jayasinghe | Version 1.0 | 2025</p>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
